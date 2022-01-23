@@ -24,6 +24,7 @@ class TestBlackJack:
         deck = Deck()
 
         assert(len(deck.cards) == 52)
+        assert(isinstance(deck.cards[0], Card))
 
     def test_shuffle_deck(self):
 
@@ -33,4 +34,4 @@ class TestBlackJack:
         deck.shuffle()
         shuffled_cards = deck.cards.copy()
 
-        assert(initial_cards[0] != shuffled_cards[0])
+        assert(initial_cards[0].value != shuffled_cards[0].value)

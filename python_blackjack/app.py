@@ -24,7 +24,7 @@ class Deck:
     def new(self):
         self.cards=[]
 
-        tmp_deck = [[x for x in range(2, 15)] for y in range(len(_suites))]
+        tmp_deck = [[Card(value, suite_idx) for value in range(2, 15)] for suite_idx in range(len(_suites))]
 
         for x in tmp_deck:
             self.cards.extend(x)
