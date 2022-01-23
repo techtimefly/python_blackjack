@@ -62,3 +62,11 @@ class TestBlackJack:
 
         assert(player.total() == (cardA.value + cardB.value))
 
+    def test_rest_player(self):
+        player = Player("Tre")
+
+        player.reset()
+
+        assert(len(player.cards) == 0)
+
+

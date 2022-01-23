@@ -26,6 +26,8 @@ class Player:
 
         return reduce(add, self.cards)
         
+    def reset(self):
+        self.cards = []
 
 class Deck:
     def __init__(self) -> None:
