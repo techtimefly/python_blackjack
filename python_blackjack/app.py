@@ -1,6 +1,7 @@
 _suites = ["clubs", "hearts", "diamonds", "spades"]
 
 import random
+from functools import reduce
 
 class Card:
     def __init__(self, value, _suite_idx) -> None:
@@ -14,7 +15,17 @@ class Card:
 class Player:
     def __init__(self, name) -> None:
         self.name = name
-        self.deck = []
+        self.cards = []
+
+    def addCard(self, card):
+        self.cards.append(card)
+
+    def total(self):
+        def add(cardA, cardB):
+            return cardA.value + cardB.value
+
+        return reduce(add, self.cards)
+        
 
 class Deck:
     def __init__(self) -> None:
@@ -36,11 +47,8 @@ class Deck:
 
         self.cards = self.tmp_cards
 
-    def addCard(self):
-        pass
-
-    def drawCard(self):
-        pass
+    def dealCard(self):
+        return self.cards.pop()
 
 class Game:
     def __init__(self) -> None:
