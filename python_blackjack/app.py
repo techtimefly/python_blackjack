@@ -64,8 +64,22 @@ class Game:
         self.deck = Deck()
         self.deck.shuffle()
 
+    def newGame(self):
+        self.reset()
+        self.addPlayerLoop()
+        self.dealInitialCards()
+
     def nextRound(self):
         pass
+
+    def addPlayerLoop(self):
+        num = input("How many players?" )
+
+        for x in range(int(num)):
+            p = input("Player name: ")
+            player = Player(p)
+            self.addPlayer(player)
+
 
     def addPlayer(self, Player):
         self.players.append(Player)
@@ -104,3 +118,7 @@ class Game:
 
     def maxPlayerScore(self)->int:
         return max([p.total for p in self.players])
+
+if __name__=="__main__":
+    game = Game()
+    game.newGame()
