@@ -29,12 +29,9 @@ class Player:
     #     return reduce(add, self.cards)
         
     def __str__(self) -> str:
-        card_string=""
+        card_str=[f"{str(c)}\n" for c in self.cards]
 
-        for c in self.cards:
-            card_string += str(c) + "\n"
-
-        return f"{self.name}: {self.total}\n{card_string}"
+        return f"{self.name}: {self.total}\n{card_str}"
 
     def reset(self):
         self.cards = []
