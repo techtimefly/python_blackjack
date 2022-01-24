@@ -23,7 +23,7 @@ class Player:
     def total(self):
         def add(cardA, cardB):
             return cardA.value + cardB.value
-
+        
         return reduce(add, self.cards)
         
     def reset(self):
@@ -54,4 +54,21 @@ class Deck:
 
 class Game:
     def __init__(self) -> None:
-        pass
+        self.players=[]
+        self.deck = Deck()
+
+    def new(self):
+        self.deck.shuffle()
+
+    def addPlayers(self, player):
+        self.players.append(player)
+
+    def has21(self, player_idx):
+        return self.players[player_idx].total() == 21
+
+    def bust(self, player_idx):
+        return self.players[player_idx].total() > 21
+
+    def dealCard(self, player_idx):
+        self.players[player_idx].addCard(self.deck.dealCard())
+

@@ -1,5 +1,5 @@
 import pytest
-from python_blackjack.app import Card, Player, Deck
+from python_blackjack.app import Card, Player, Deck, Game
 
 class TestBlackJack:
 
@@ -48,6 +48,7 @@ class TestBlackJack:
         assert(isinstance(card, Card))
         assert(initial_length != new_length)
 
+    
     def test_player_total(self):
         player = Player("Tre")
 
@@ -60,6 +61,7 @@ class TestBlackJack:
         player.addCard(cardA)
         player.addCard(cardB)
 
+        assert(isinstance(player.total(),  int))
         assert(player.total() == (cardA.value + cardB.value))
 
     def test_rest_player(self):
@@ -69,4 +71,22 @@ class TestBlackJack:
 
         assert(len(player.cards) == 0)
 
+    
+    def test_player_has_21(self):
+        player = Player("tre")
 
+        player.addCard(Card(20, 0))
+        player.addCard(Card(1, 0))
+
+        
+        assert(player.total() == 21)
+        
+
+    def test_player_bust(self):
+        player = Player("tre")
+
+        player.addCard(Card(20, 0))
+        player.addCard(Card(2, 0))
+
+        
+        assert(player.total() > 21)
