@@ -11,7 +11,7 @@ class TestGame:
     def test_deal_card(self):
 
         deck = self.deck
-        
+
         initial_length = len(deck.cards)
 
         card = deck.dealCard()
@@ -20,7 +20,5 @@ class TestGame:
 
         assert(isinstance(card, Card))
         assert(initial_length != new_length)
-
-    
 
 

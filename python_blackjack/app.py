@@ -55,3 +55,33 @@ class Deck:
 class Game:
     def __init__(self) -> None:
         pass
+
+    def reset(self):
+        pass
+
+    def nextRound(self):
+        pass
+
+    def addPlayer(self):
+        pass
+
+    def updateActivePlayers(self):
+        pass
+
+    def checkForWinner(self):
+        pass
+
+    def hit(self, player_idx)->bool:
+        pass
+
+    def bust(self, player_idx)->bool:
+        pass
+
+    def maxPlayerScore(self)->int:
+        pass
+
+    def has21(self, player_idx)->bool:
+        pass
+
+    def getWinners(self):
+        pass
