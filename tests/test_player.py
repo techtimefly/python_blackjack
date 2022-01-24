@@ -23,7 +23,7 @@ class TestPlayer:
         player.addCard(cardA)
         player.addCard(cardB)
 
-        assert(player.total() == (cardA.value + cardB.value))
+        assert(player.total == (cardA.value + cardB.value))
 
     def test_reset_player(self):
         player = self.player

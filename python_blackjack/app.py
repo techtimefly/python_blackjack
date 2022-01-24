@@ -16,16 +16,19 @@ class Player:
     def __init__(self, name) -> None:
         self.name = name
         self.cards = []
+        self.total = 0
 
     def addCard(self, card):
         self.cards.append(card)
+        self.total += card.value
 
-    def total(self):
-        def add(cardA, cardB):
-            return cardA.value + cardB.value
+    # def total(self):
+    #     def add(cardA, cardB):
+    #         return cardA.value + cardB.value
 
-        return reduce(add, self.cards)
+    #     return reduce(add, self.cards)
         
+    
     def reset(self):
         self.cards = []
 
@@ -54,34 +57,50 @@ class Deck:
 
 class Game:
     def __init__(self) -> None:
-        pass
+        self.players=[]
+        self.deck=Deck()
 
     def reset(self):
-        pass
+        self.deck = Deck()
+        self.deck.shuffle()
 
     def nextRound(self):
         pass
 
-    def addPlayer(self):
-        pass
+    def addPlayer(self, Player):
+        self.players.append(Player)
 
     def updateActivePlayers(self):
         pass
 
+    def dealInitialCards(self):
+
+        for i in range(2):
+            for x in range(len(self.players)):
+                self.hit(x)
+
     def checkForWinner(self):
         pass
 
+    def has21(self, player_idx)->bool:
+        return self.players[player_idx].total == 21 
+
     def hit(self, player_idx)->bool:
-        pass
+
+        if (self.bust(player_idx)): 
+            return 
+
+        p = self.players[player_idx]
+
+        card = self.deck.dealCard()
+
+        p.addCard(card)
+
+        self.players[player_idx] = p
+
 
     def bust(self, player_idx)->bool:
-        pass
+        return self.players[player_idx].total > 21
 
     def maxPlayerScore(self)->int:
-        pass
-
-    def has21(self, player_idx)->bool:
-        pass
-
-    def getWinners(self):
-        pass
+        return max([p.total for p in self.players])

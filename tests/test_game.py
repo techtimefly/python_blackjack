@@ -1,24 +1,44 @@
 import pytest
-from python_blackjack.app import Card, Player, Deck
+from python_blackjack.app import Card, Player, Deck, Game
 
 class TestGame:
 
     @classmethod
     def setup_class(cls):
-        cls.deck = Deck()
-        cls.player = []
+        cls.game = Game()
+        cls.game.reset()
 
-    def test_deal_card(self):
+        p1 = Player("Steve")
+        p2 = Player("Mike")
+        p3 = Player("Kevin")
 
-        deck = self.deck
+        cls.game.addPlayer(p1)
+        cls.game.addPlayer(p2)
+        cls.game.addPlayer(p3)
 
-        initial_length = len(deck.cards)
+    def test_dealInitialCardsToPlayers(self):
 
-        card = deck.dealCard()
+        game = self.game
 
-        new_length = len(deck.cards)
+        game.dealInitialCards()
 
-        assert(isinstance(card, Card))
-        assert(initial_length != new_length)
+        for x in range(len(game.players)):
+            assert(len(game.players[x].cards)==2)
+    
+    # def test_deal_card(self):
+
+    #     deck = self.deck
+
+    #     initial_length = len(deck.cards)
+
+    #     card = deck.dealCard()
+
+    #     new_length = len(deck.cards)
+
+    #     assert(isinstance(card, Card))
+    #     assert(initial_length != new_length)
 
 
+    def test_get_max_player_score(self):
+        pass
+        
