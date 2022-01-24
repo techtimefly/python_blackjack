@@ -25,6 +25,22 @@ class TestGame:
         for x in range(len(game.players)):
             assert(len(game.players[x].cards)==2)
     
+    def test_show_players(self):
+
+        game = self.game
+
+        game.dealInitialCards()
+
+
+        for p in self.game.players:
+            card_str=[f"{str(c)}\n" for c in p.cards]
+
+            player_str=f"{p.name}: {p.total}\n{card_str}"
+
+            assert(str(p) == player_str)
+
+        
+            
     # def test_deal_card(self):
 
     #     deck = self.deck
