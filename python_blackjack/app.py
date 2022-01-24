@@ -28,7 +28,14 @@ class Player:
 
     #     return reduce(add, self.cards)
         
-    
+    def __str__(self) -> str:
+        card_string=""
+
+        for c in self.cards:
+            card_string += str(c) + "\n"
+
+        return f"{self.name}: {self.total}\n{card_string}"
+
     def reset(self):
         self.cards = []
 
@@ -118,6 +125,7 @@ class Game:
 
     def maxPlayerScore(self)->int:
         return max([p.total for p in self.players])
+
 
 if __name__=="__main__":
     game = Game()
