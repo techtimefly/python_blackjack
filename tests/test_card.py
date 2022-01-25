@@ -5,9 +5,6 @@ class TestBlackJack:
 
     def test_card(self):
 
-        value  = 5
+        card=Card(2, "diamonds")
 
-        card=Card(value, 0)
-
-        assert(card.value == value)
-        assert(str(card) == f"{card.value} of {card.suite}")
+        assert(str(card) == "2 of diamonds")

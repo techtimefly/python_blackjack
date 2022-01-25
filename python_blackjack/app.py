@@ -1,15 +1,34 @@
-_suites = ["clubs", "hearts", "diamonds", "spades"]
+
 
 import random
 from functools import reduce
 
 class Card:
-    def __init__(self, value, _suite_idx) -> None:
-        self.value=value
-        self.suite=_suites[_suite_idx]
+    def __init__(self, rank, suit) -> None:
+        self.rank=str(rank)
+        self.suit=suit
+        self.updateValue()
+
+    def updateValue(self, newValue=None):
+
+        value=-1
+
+        if newValue:
+            value = newValue
+            
+        elif self.rank.isdigit():
+            value = self.rank
+        
+        elif self.rank.lower() in ["jack", "queen", "king"]:
+            value = 10
+            
+        elif self.rank == "ace":
+            value = 11
+
+        self.value = int(value)
 
     def __str__(self) -> str:
-        return f"{self.value} of {self.suite}"
+        return f"{self.rank} of {self.suit}"
     
 
 class Player:
@@ -37,6 +56,10 @@ class Player:
         self.cards = []
 
 class Deck:
+    _suits = ["clubs", "hearts", "diamonds", "spades"]
+    _ranks=list(range(2,11))
+    _ranks.extend(["jack", "queen", "king", "ace"])
+
     def __init__(self) -> None:
         self.cards=[]
         self.new()
@@ -45,10 +68,10 @@ class Deck:
     def new(self):
         self.cards=[]
 
-        tmp_deck = [[Card(value, suite_idx) for value in range(2, 15)] for suite_idx in range(len(_suites))]
+        cards = [[Card(rank, suit) for rank in self._ranks for suit in self._suits]]
 
-        for x in tmp_deck:
-            self.cards.extend(x)
+        for c in cards:
+            self.cards.extend(c)
 
     def shuffle(self):
         self.tmp_cards = self.cards.copy()
