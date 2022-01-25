@@ -93,17 +93,11 @@ class Game:
 
         self._current_player=self.players[i]
 
-    def addPlayerLoop(self):
-        num = input("How many players?" )
+    def addPlayers(self, players):
 
-        for x in range(int(num)):
-            p = input("Player name: ")
-            player = Player(p)
-            self.addPlayer(player)
+        for p in players:
+            self.players.append(p)
 
-
-    def addPlayer(self, Player):
-        self.players.append(Player)
 
     def updateActivePlayers(self):
         pass
