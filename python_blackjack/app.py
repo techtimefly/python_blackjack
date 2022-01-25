@@ -40,6 +40,7 @@ class Deck:
     def __init__(self) -> None:
         self.cards=[]
         self.new()
+        
 
     def new(self):
         self.cards=[]
@@ -62,6 +63,9 @@ class Deck:
 class Game:
     def __init__(self) -> None:
         self.players=[]
+        self._current_player=None
+        self._current_player_index=-1
+
         self.deck=Deck()
 
     def reset(self):
@@ -75,6 +79,19 @@ class Game:
 
     def nextRound(self):
         pass
+
+    def nextPlayer(self):
+
+        i = self._current_player_index
+
+        i+=1
+
+        if i >= len(self.players):
+            i = 0
+        
+        self._current_player_index = i 
+
+        self._current_player=self.players[i]
 
     def addPlayerLoop(self):
         num = input("How many players?" )
@@ -95,30 +112,47 @@ class Game:
 
         for i in range(2):
             for x in range(len(self.players)):
-                self.hit(x)
+                self.nextPlayer()
+                self.hit()
+                
 
     def checkForWinner(self):
         pass
 
-    def has21(self, player_idx)->bool:
-        return self.players[player_idx].total == 21 
+    def blackjack(self)->bool:
+        return self._current_player.total == 21 
 
-    def hit(self, player_idx)->bool:
+    def hitLoop(self):
+        #for every player give the chance to draw card
+        #before drawing card player total must be less than 21
 
-        if (self.bust(player_idx)): 
+        for i in range(len(self.players)):
+            p = self.player[i]
+
+            if self.total > 21:
+                continue
+
+            print(f"Current Total is {p.total}")
+            choice=input("Draw Card (y)? ")
+
+            if choice.lower() != "y":
+                continue
+
+            card = self.hit(i)
+
+
+    def hit(self)->bool:
+
+        if (self.bust()): 
             return 
-
-        p = self.players[player_idx]
 
         card = self.deck.dealCard()
 
-        p.addCard(card)
-
-        self.players[player_idx] = p
+        self._current_player.addCard(card)
 
 
-    def bust(self, player_idx)->bool:
-        return self.players[player_idx].total > 21
+    def bust(self)->bool:
+        return self._current_player.total > 21
 
     def maxPlayerScore(self)->int:
         return max([p.total for p in self.players])
