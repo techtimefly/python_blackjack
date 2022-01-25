@@ -12,9 +12,7 @@ class TestGame:
         p2 = Player("Mike")
         p3 = Player("Kevin")
 
-        cls.game.addPlayer(p1)
-        cls.game.addPlayer(p2)
-        cls.game.addPlayer(p3)
+        cls.game.addPlayers([p1,p2,p3])
 
     def test_dealInitialCardsToPlayers(self):
 
