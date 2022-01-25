@@ -7,4 +7,4 @@ class TestBlackJack:
 
         card=Card(2, "diamonds")
 
-        assert(str(card) == f"{card.rank} of {card.suit}")
+        assert(str(card) == "2 of diamonds")
