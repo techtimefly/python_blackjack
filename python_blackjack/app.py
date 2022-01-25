@@ -1,5 +1,3 @@
-
-
 import random
 from functools import reduce
 
@@ -95,13 +93,11 @@ class Game:
         self.deck = Deck()
         self.deck.shuffle()
 
-    def newGame(self):
-        self.reset()
-        self.addPlayerLoop()
-        self.dealInitialCards()
-
     def nextRound(self):
-        pass
+        self.reset()
+
+        for p in self.players:
+            p.reset()
 
     def nextPlayer(self):
 
@@ -139,24 +135,6 @@ class Game:
     def blackjack(self)->bool:
         return self._current_player.total == 21 
 
-    def hitLoop(self):
-        #for every player give the chance to draw card
-        #before drawing card player total must be less than 21
-
-        for i in range(len(self.players)):
-            p = self.player[i]
-
-            if self.total > 21:
-                continue
-
-            print(f"Current Total is {p.total}")
-            choice=input("Draw Card (y)? ")
-
-            if choice.lower() != "y":
-                continue
-
-            card = self.hit(i)
-
 
     def hit(self)->bool:
 
@@ -173,8 +151,3 @@ class Game:
 
     def maxPlayerScore(self)->int:
         return max([p.total for p in self.players])
-
-
-if __name__=="__main__":
-    game = Game()
-    game.newGame()
