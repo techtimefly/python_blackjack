@@ -52,6 +52,19 @@ class TestGame:
     #     assert(isinstance(card, Card))
     #     assert(initial_length != new_length)
 
+    def test_downgrade_ace_card(self):
+        g=self.game
+
+        g.nextRound()
+
+        p = g.players[0]
+
+        g.nextPlayer()
+        
+        g.hit(Card("ace", "hearts"))
+        g.hit(Card("ace", "clubs"))
+
+        assert(g.players[0].total == 12)
 
     def test_get_max_player_score(self):
         pass

@@ -52,6 +52,7 @@ class Player:
 
     def reset(self):
         self.cards = []
+        self.total = 0
 
 class Deck:
     _suits = ["clubs", "hearts", "diamonds", "spades"]
@@ -129,6 +130,13 @@ class Game:
                 self.hit()
                 
 
+    def player_will_bust(self, card):
+
+        if self._current_player.total + card.value > 21:
+            return True
+
+        return False
+
     def checkForWinner(self):
         pass
 
@@ -136,12 +144,21 @@ class Game:
         return self._current_player.total == 21 
 
 
-    def hit(self)->bool:
+    def hit(self, specific_card=None)->bool:
 
         if (self.bust()): 
             return 
 
-        card = self.deck.dealCard()
+        card = None
+
+        if(specific_card):
+            card=specific_card
+
+        else:
+            card = self.deck.dealCard()
+
+        if(card.rank == "ace" and self.player_will_bust(card)):
+            card.value = 1
 
         self._current_player.addCard(card)
 
