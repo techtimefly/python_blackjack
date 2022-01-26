@@ -85,6 +85,7 @@ class Deck:
 class Game:
     def __init__(self) -> None:
         self.players=[]
+        self.dealer=Player("Dealer")
         self._current_player=None
         self._current_player_index=-1
 
@@ -95,10 +96,13 @@ class Game:
         self.deck.shuffle()
 
     def nextRound(self):
-        self.reset()
-
+        
         for p in self.players:
             p.reset()
+
+        self.reset()
+        self.nextPlayer()
+        self.dealInitialCards()
 
     def nextPlayer(self):
 
@@ -106,17 +110,29 @@ class Game:
 
         i+=1
 
-        if i >= len(self.players):
+        if i > len(self.players) - 1:
             i = 0
         
         self._current_player_index = i 
 
         self._current_player=self.players[i]
 
+    def dealersTurn(self):
+
+        self._current_player=self.dealer
+
+        score_to_beat=self.maxPlayerScore()
+
+        if(self._current_player.total < score_to_beat):
+    
+            self.hit()
+
     def addPlayers(self, players):
 
         for p in players:
             self.players.append(p)
+
+        self.players.append(self.dealer)
 
 
     def updateActivePlayers(self):
@@ -138,7 +154,9 @@ class Game:
         return False
 
     def checkForWinner(self):
-        pass
+        max_score = max([p.total for p in self.players if p.total <=21])
+
+        return [p for p in self.players if p.total == max_score]
 
     def blackjack(self)->bool:
         return self._current_player.total == 21 
@@ -146,7 +164,7 @@ class Game:
 
     def hit(self, specific_card=None)->bool:
 
-        if (self.bust()): 
+        if (self.bust() or self.blackjack()): 
             return 
 
         card = None
@@ -162,9 +180,11 @@ class Game:
 
         self._current_player.addCard(card)
 
+        return card
+
 
     def bust(self)->bool:
         return self._current_player.total > 21
 
     def maxPlayerScore(self)->int:
-        return max([p.total for p in self.players])
+        return max([p.total for p in self.players if p.total <=21])
