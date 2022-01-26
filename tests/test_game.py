@@ -20,8 +20,8 @@ class TestGame:
 
         game.dealInitialCards()
 
-        for x in range(len(game.players)):
-            assert(len(game.players[x].cards)==2)
+
+        assert(len(game.players[0].cards)==2)
     
     def test_show_players(self):
 
