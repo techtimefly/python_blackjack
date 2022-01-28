@@ -18,36 +18,36 @@ class Card:
     """
 
     def __init__(self, rank, suit):
-        self.rank=rank
-        self.suit=suit
-        self.value=0
+        self._rank=rank
+        self._suit=suit
+        self._value=0
 
     @property
-    def rank(self)->str:
-        return self.rank
+    def rank(self):
+        return self._rank
 
-    rank.setter
+    @rank.setter
     def rank(self, x:str):
-        self.rank=x
+        self._rank=x
 
     @property
     def suit(self)->str:
-        return self.suit
+        return self._suit
 
-    suit.setter
+    @suit.setter
     def suit(self, x:str):
-        self.suit = x
+        self._suit = x
     
     @property
     def value(self):
-        return self.value
+        return self._value
 
-    value.setter
+    @value.setter
     def value(self, x:int):
-        self.value = x
+        self._value = x
 
     def __str__(self):
-        return f"{self.rank} of {self.suit}"
+        return f"{self._rank} of {self._suit}"
 
 class Pack:
     """
@@ -56,7 +56,9 @@ class Pack:
     pass
 
 class Player:
-    pass
+    def __init__(self, name):
+        self.name=name
+    
 
 class Dealer(Player):
     pass
