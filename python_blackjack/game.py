@@ -364,6 +364,15 @@ class Dealer(Player):
 
 class Game:
     # TODO: define the game
+    """Will handle the logic of the game
+
+    Methods
+        addPlayers(Iterable[Player])    : adds players to the game
+        nextPlayer()                    : make the next active player the current player
+        playerTurn()                    : 
+        reset()                         :
+        distributeInitialChips()        :
+    """
 
     #TODO: refine how the tokens are distributed from the player when placing a bet
     # def placeBet(player:Player, amount:int)->list(Token):

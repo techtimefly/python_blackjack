@@ -2,30 +2,6 @@ from python_blackjack.game import *
 import pytest
 import random
 
-class TestCard:
-
-    def setup_class(cls):
-        pass
-
-    def test_create_card(self):
-        rank="queen"
-        suit="clubs"
-
-        card = Card(rank, suit)
-
-        assert(card is not None)
-        assert(card.rank == rank)
-        assert(card.suit==suit)
-        assert(str(card) == f"{rank} of {suit}")
-
-    def test_set_card_value(self):
-        rank="5"
-        suit="clubs"
-
-        card = Card(rank, suit)
-
-        assert(card.value == 5)
-
 class TestPlayer:
 
     def setup_class(cls):
@@ -99,45 +75,3 @@ class TestPlayer:
         assert(bet3 is not None and len(bet3) == 1)
         assert(bet4 is not None and len(bet4) == 2)
         assert(bet5 is not None and len(bet5) == 4)
-
-
-class TestDealer:
-    def setup_class(cls):
-        pass
-
-    def test_should_dealer_hit(self):
-        d = Dealer("Dealer", 17, 21)
-
-        assert(d.shouldHit(Card("21", "clubs")))
-        assert(not d.shouldHit(Card("12", "clubs")))
-
-class TestPack:
-
-    def setup_class(cls):
-        pass
-
-    def test_generate_pack(self):
-        pack = Pack(list(range(2,15)), ["clubs", "hearts", "diamonds", "spades"])
-
-        assert(pack is not None and len(pack.cards) > 0)
-
-        a=pack.cards.copy()
-        pack.shuffle()
-        b = pack.cards.copy()
-
-        assert(str(a[0]) != str(b[0]))
-
-    def test_shuffle_pack(self):
-        pack = Pack(list(range(2,15)), ["clubs", "hearts", "diamonds", "spades"])
-
-        a=pack.cards.copy()
-        pack.shuffle()
-        b = pack.cards.copy()
-
-        assert(len(a) > 0 and len(b) > 0 and a != b)
-
-    def test_add_card_to_pack(self):
-        pack = Pack()
-        pack.addCard(Card("2", "clubs"))
-
-        assert(pack is not None and len(pack.cards) == 1)
