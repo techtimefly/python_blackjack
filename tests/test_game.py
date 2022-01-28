@@ -70,6 +70,37 @@ class TestPlayer:
         assert(p.cards != None and len(p.cards) > 0)
         assert(card_total > 0 and card_total == total)
 
+    def test_place_bet(self):
+        p=Player("p1", [Token(100), Token(100)])
+        bet1 = p.betTokens(200)
+
+        p=Player("p1", [Token(50), Token(25)])
+        bet2 = p.betTokens(75)
+
+        p=Player("p1", [Token(25)])
+        bet3 = p.betTokens(25)
+        
+
+        p._tokens=[]
+        p.addToken(Token(10))
+        p.addToken(Token(10))
+        bet4 = p.betTokens(20)
+
+        p._tokens=[]
+        p.addToken(Token(100))
+        p.addToken(Token(100))
+        p.addToken(Token(100))
+        p.addToken(Token(100))
+        bet5 = p.betTokens(400)
+
+
+        assert(bet1 is not None and len(bet1) == 2)
+        assert(bet2 is not None and len(bet2) == 2)
+        assert(bet3 is not None and len(bet3) == 1)
+        assert(bet4 is not None and len(bet4) == 2)
+        assert(bet5 is not None and len(bet5) == 4)
+
+
 class TestDealer:
     def setup_class(cls):
         pass

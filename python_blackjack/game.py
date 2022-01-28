@@ -197,6 +197,9 @@ class Player:
         balance(): int
             returns the total amount of money the player has
 
+        betTokens(amount:int): Iterable[Token]
+            returns the a list of tokens that represent how much the player wishes to bet
+
         cardTotal(): int
             returns the sum of all the cards
 
@@ -248,7 +251,10 @@ class Player:
         if self._tokens is None: 
             self._tokens = [token]
         else:
-            self._tokens.append(token)
+            if token not in self._tokens:
+                self._tokens.append(token)
+            else:
+                raise Exception("Cannot give the player the same token")
 
     def balance(self)->int:
         """The sum of all the players tokens
@@ -259,6 +265,36 @@ class Player:
         all_tokens = [token.value for token in self._tokens]
 
         return sum(all_tokens)
+
+    def betTokens(self, amount:int)->Iterable[Token]:
+        """Returns the tokens that make up the bet
+
+        Args:
+            amount (int): [description]
+
+        Returns:
+            Iterable[Token]: [description]
+        """
+
+        if self.balance() < amount: 
+            raise Exception(f"Not enough to cover the bet! You have {self.balance()}")
+
+        self._tokens.sort(key=lambda token: token.value, reverse=True)
+
+        tokens_deducted = []
+
+        amount_needed = amount
+
+        mark_for_removal=[]
+
+        for (i,t) in enumerate(self._tokens):
+            if t.value <= amount_needed:
+                tokens_deducted.append(t)
+                amount_needed -= t.value
+                mark_for_removal.append(i)
+
+        return tokens_deducted
+
 
     def cardTotal(self)->int:
         """Gets the value of the cards that the player has
@@ -323,9 +359,6 @@ class Dealer(Player):
         future_total=current_total + card_total
 
         return future_total in list(range(self._min_score, self._max_score + 1))
-
-
-    
 
 class Game:
     # TODO: define the game
