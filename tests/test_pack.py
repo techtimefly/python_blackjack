@@ -1,4 +1,5 @@
-from python_blackjack.game import *
+from python_blackjack.card import Card
+from python_blackjack.pack import Pack
 import pytest
 import random
 

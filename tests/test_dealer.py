@@ -1,4 +1,5 @@
-from python_blackjack.game import *
+from python_blackjack.card import Card
+from python_blackjack.dealer import Dealer
 import pytest
 import random
 
@@ -9,5 +10,11 @@ class TestDealer:
     def test_should_dealer_hit(self):
         d = Dealer("Dealer", 17, 21)
 
-        assert(d.shouldHit(Card("21", "clubs")))
-        assert(not d.shouldHit(Card("12", "clubs")))
+        d.cards=[]
+        d.hit(Card("21", "clubs"))
+        assert(d.shouldHit())
+
+        
+        d.cards=[]
+        d.hit(Card("22", "clubs"))
+        assert(not d.shouldHit())

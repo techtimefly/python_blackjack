@@ -1,4 +1,6 @@
-from python_blackjack.game import *
+from python_blackjack.player import Player
+from python_blackjack.token import Token
+from python_blackjack.card import Card
 import pytest
 import random
 
