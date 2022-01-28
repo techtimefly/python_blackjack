@@ -1,3 +1,4 @@
+from logging import raiseExceptions
 from typing import Any, Iterable, final
 from attrs import setters
 import random
@@ -281,22 +282,20 @@ class Player:
 
         self._tokens.sort(key=lambda token: token.value, reverse=True)
 
-        tokens_deducted = []
+        tokens_to_transfer = []
 
         amount_needed = amount
 
         mark_for_removal=[]
+        
+        iter_tokens=enumerate(self._tokens.copy())
 
-        for (i,t) in enumerate(self._tokens):
+        for (i,t) in iter_tokens:
             if t.value <= amount_needed:
-                tokens_deducted.append(t)
+                tokens_to_transfer.append(self._tokens.remove(t))
                 amount_needed -= t.value
-                mark_for_removal.append(i)
 
-        for i in range(mark_for_removal):
-            self._tokens.pop(i)
-
-        return tokens_deducted
+        return tokens_to_transfer
 
 
     def cardTotal(self)->int:
