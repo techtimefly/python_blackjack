@@ -70,6 +70,16 @@ class TestPlayer:
         assert(p.cards != None and len(p.cards) > 0)
         assert(card_total > 0 and card_total == total)
 
+class TestDealer:
+    def setup_class(cls):
+        pass
+
+    def test_should_dealer_hit(self):
+        d = Dealer("Dealer", 17, 21)
+
+        assert(d.shouldHit(Card("21", "clubs")))
+        assert(not d.shouldHit(Card("12", "clubs")))
+
 class TestPack:
 
     def setup_class(cls):

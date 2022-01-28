@@ -295,7 +295,7 @@ class Dealer(Player):
         shouldHit(Card):bool
          determine if the dealer should take a card
     """
-    def __init__(self, name: str, min_score:int, max_score:int, tokens:Iterable(Token)=None):
+    def __init__(self, name: str, min_score:int, max_score:int, tokens:Iterable[Token]=None):
         """Constructor that sets up the dealer
 
         Args:
@@ -310,13 +310,19 @@ class Dealer(Player):
         self._max_score=max_score
     
     def shouldHit(self, card:Card)->bool:
+        """Determine if the dealer should hit
+
+        Args:
+            card (Card): a Card object
+
+        Returns:
+            bool: should the Dealer get another card
+        """
         current_total = self.cardTotal()
         card_total=card.value
         future_total=current_total + card_total
-        target=list(range(self._min_score, self._max_score))
 
-
-        return future_total in list(range(self._min_score, self._max_score))
+        return future_total in list(range(self._min_score, self._max_score + 1))
 
 
     
