@@ -1,6 +1,7 @@
+from typing import Iterable
 from python_blackjack.game import Game
 from python_blackjack.player import Player
-from python_blackjack.token import Token
+from python_blackjack.token import TokenMultiplier, Token
 import pytest
 import random
 
@@ -8,12 +9,11 @@ from python_blackjack.token import Token
 
 class TestGame:
     def setup_class(cls):
-        game=Game()
-        players=[]
-        tokens=[]
+        cls.game=Game(cls.create_tokens(cls))
+        cls.players=[]
 
     def test_add_players_to_game_with_balance(self):
-        #TODO: test adding players to the game
+        
         players = self.newPlayers()
 
         assert(players != None and len(players) > 0)
@@ -73,6 +73,7 @@ class TestGame:
         #TODO: test that the player can exchance tokens
         pass
 
+
     def newPlayers(self):
         players=["Steve", "Michael", "Carlos", "Will", "Beth"]
 
@@ -80,3 +81,12 @@ class TestGame:
         tokens=[Token(i) for i in [25, 50, 100, 250, 500]*5]
 
         return [Player(p, tokens.copy()) for p in players]
+
+    def create_tokens(self):
+        bag=[]
+        bag.extend(TokenMultiplier(25, 10).tokens)
+        bag.extend(TokenMultiplier(50, 10).tokens)
+        bag.extend(TokenMultiplier(100, 3).tokens)
+        bag.extend(TokenMultiplier(500, 2).tokens)
+
+        return [t for t in bag]

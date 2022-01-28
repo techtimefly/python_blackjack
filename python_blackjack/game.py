@@ -1,3 +1,4 @@
+from python_blackjack.token import Token
 from logging import raiseExceptions
 from typing import Any, Iterable, final
 from attrs import setters
@@ -23,6 +24,12 @@ class Game:
     
     #     
     
+    def __init__(self, tokens:Iterable[Token]) -> None:
+        self._tokens = tokens
+
+    def resetTokenPool(self, tokens:Iterable[Token]):
+        self._tokens = tokens
+
     def shouldHit(self, card)->bool:
         """Determine if the dealer should hit
 
