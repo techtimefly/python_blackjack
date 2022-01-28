@@ -223,7 +223,16 @@ class Player:
     
 
 class Dealer(Player):
+    # TODO: define the dealer
     pass
 
 class Game:
+    # TODO: define the game
+
+    #TODO: refine how the tokens are distributed from the player when placing a bet
+    # def placeBet(player:Player, amount:int)->list(Token):
+    #     if amount > player.balance():
+    #         raise Exception("player doesn't have enough tokens to place the bet")
+    
+    #     
     pass
