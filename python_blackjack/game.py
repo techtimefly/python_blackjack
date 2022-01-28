@@ -293,6 +293,9 @@ class Player:
                 amount_needed -= t.value
                 mark_for_removal.append(i)
 
+        for i in range(mark_for_removal):
+            self._tokens.pop(i)
+
         return tokens_deducted
 
 
