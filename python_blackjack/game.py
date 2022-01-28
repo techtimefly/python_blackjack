@@ -289,8 +289,37 @@ class Player:
     
 
 class Dealer(Player):
-    # TODO: define the dealer
-    pass
+    """A subclass of Player.  Will handle the dealer logic
+
+    Methods:
+        shouldHit(Card):bool
+         determine if the dealer should take a card
+    """
+    def __init__(self, name: str, min_score:int, max_score:int, tokens:Iterable(Token)=None):
+        """Constructor that sets up the dealer
+
+        Args:
+            name (str): the dealer's name
+            min_score (int): the minimum score threshold
+            max_score (int): the maximum score threshold
+            tokens (Iterable(Token), optional): tokens to start the dealer off with
+        """
+        super().__init__(name, tokens)
+        
+        self._min_score=min_score
+        self._max_score=max_score
+    
+    def shouldHit(self, card:Card)->bool:
+        current_total = self.cardTotal()
+        card_total=card.value
+        future_total=current_total + card_total
+        target=list(range(self._min_score, self._max_score))
+
+
+        return future_total in list(range(self._min_score, self._max_score))
+
+
+    
 
 class Game:
     # TODO: define the game
