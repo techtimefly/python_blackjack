@@ -18,6 +18,7 @@ class TestGame:
 
         assert(players != None and len(players) > 0)
         assert(players[0].balance() > 0)
+        assert(players[0].cardTotal() == 0)
 
 
     def test_deal_initial_two_cards(self):
