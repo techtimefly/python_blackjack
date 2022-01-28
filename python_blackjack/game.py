@@ -1,12 +1,25 @@
-from typing import Iterable, final
+from typing import Any, Iterable, final
 from attrs import setters
 import random
 
 class Token:
+
+    """Represents game currency
+
+    Attr:
+        value (any)  : a value defined by the game, usually an int
+    """
+
     def __init__(self, value) -> None:
+        """Constructor
+
+        Args:
+            value (any) : sets the value of the token
+        """
         self._value=value
 
     @property
+
     def value(self): return self._value
 
     @value.setter
@@ -14,28 +27,27 @@ class Token:
 
 
 class Card:
-    """
-    Represents and stores the information of a player card
+    """Represents and stores the information of a player card
     
-    ...
-
-    Attributes
-    ----------
-    rank: str
-        the face value of the card
-    suite: str
-        the suit the card belongs to
-    value: int
-        the actual value of the card
+    Attr:
+        rank (str)   : the face value of the card
+        suite (str)  : the suit the card belongs to
+        value (int)  : the actual value of the card
     """
+    
+    def __init__(self, rank, suit:str):
+        """Constructor that sets the details of the card
 
-    def __init__(self, rank:str, suit:str):
-        self._rank=rank
+        Args:
+            rank (str)  : usually the pip value of the card
+            suit (str)  : the specific suit this card belongs to
+        """
+        self._rank=str(rank)
         self._suit=suit
         self._value=rank
 
-        # if(rank.isdigit):
-        #     self.value = int(rank)
+        if(self._rank.isdigit()):
+            self._value = int(self._rank)
 
     @property
     def rank(self):
@@ -65,17 +77,15 @@ class Card:
         return f"{self._rank} of {self._suit}"
 
 class Pack:
-    """
-    represents a deck of cards
+    """represents a deck of cards
 
-    ...
-    Attributes:
-        cards: [Card]
-            an array of all the cards in the deck
+    
+    Attr:
+        cards (Iterable(Card))  : an array of all the cards in the deck
 
-    ...
+    
     Methods
-        __init__(self, ranks:iter, suits:iter):
+        __init__(self, ranks:Iterable, suits:Iterable):
             constructor
             builds the deck of cards
 
@@ -96,6 +106,12 @@ class Pack:
 
     """
     def __init__(self, ranks:Iterable=None, suits:Iterable=None):
+        """Constructor that generates the cards
+
+        Args:
+            ranks (Iterable)    : for looping through the card ranks
+            suits (Iterable)    : for looping through the suits
+        """
         self._cards=[]
 
         if(ranks != None and suits != None):
@@ -105,15 +121,30 @@ class Pack:
     def cards(self): return self._cards
 
     def addCard(self, card):
+        """Adds a new card
+
+        Args:
+            card (Card) : a card object to add to the list or cards
+
+        Raises:
+            Exception   : raise an exception if trying to add an existing card back
+        """
         if card in self._cards:
-            raise ValueError(f"the card already exists in the deck: {str(card)}")
+            raise Exception(f"the card already exists in the deck: {str(card)}")
 
         self._cards.append(card)
 
     def clear(self): 
+        """Removes all cards
+        """
         self._cards.clear
 
-    def deal_card(self):
+    def deal_card(self)->Card:
+        """Takes a card top card
+
+        Returns:
+            Card: the top card in the list
+        """
         card=None
         try:
             result=self._cards.pop()
@@ -125,6 +156,12 @@ class Pack:
             return card
 
     def generate_cards(self, ranks:Iterable, suits:Iterable):
+        """Generates a new list of cards
+
+        Args:
+            ranks (Iterable)    : for looping through the card ranks
+            suits (Iterable)    : for looping through the suits
+        """
         self.clear()
 
         all_cards=[[Card(r, s) for r in ranks for s in suits]]
@@ -133,24 +170,23 @@ class Pack:
             self._cards.extend(row)
 
     def shuffle(self):
-        random.shuffle(self._cards)
+        """Shuffles the cards in random order
+        """
+        for i in range(random.randint(1,10)):
+            random.shuffle(self._cards)
     
 
 class Player:
-    """
-    represents a player
+    """represents a player
 
     ...
-    Attributes:
+    Attr::
         name: str
             the name of the player
 
-        cards: [Card]
-            the cards that the player current has
+        cards ([Card])  : the cards that the player current has
 
-        chips: [Chip]
-            the chips the player has
-            these can be used to place bets
+        chips ([Token]) : the chips the player has these can be used to place bets
 
     ...
     Methods:
@@ -167,10 +203,16 @@ class Player:
         hit(card):
             adds a new card to the players hand
     """
-    def __init__(self, name):
+    def __init__(self, name:str, tokens=[]):
+        """Constructor that creates a new player with optional tokens
+
+        Args:
+            name (str): the name of the player
+            tokens (Iterable(Token), optional): an iterable of tokens so that the player may have a starting balance. Defaults to None.
+        """
         self._name=name
         self._cards=[]
-        self._tokens=[]
+        self._tokens=tokens
     
     @property
     def name(self): return self._name
@@ -198,28 +240,52 @@ class Player:
         self._tokens = x
 
     def addToken(self, token:Token):
+        """Add a token to the players tokens
+
+        Args:
+            token (Token): an ingame currency item that has a value
+        """
         if self._tokens is None: 
             self._tokens = [token]
         else:
             self._tokens.append(token)
 
-    def balance(self):
+    def balance(self)->int:
+        """The sum of all the players tokens
+
+        Returns:
+            int: sum of all the players tokens
+        """
         all_tokens = [token.value for token in self._tokens]
 
         return sum(all_tokens)
 
-    def cardTotal(self):
+    def cardTotal(self)->int:
+        """Gets the value of the cards that the player has
+
+        Returns:
+            int: sum of all the card values
+        """
         all_values=[c.value for c in self._cards]
 
         return sum(all_values)
 
     def hit(self, card)->bool:
+        """Adds a new card to the players cards
 
+        Args:
+            card (Card): an instance of a card
+
+        Returns:
+            bool: flag that determines if the card was added
+        """
         if card in self._cards:
             #raise("The player already has this card")
-            raise(ValueError(f"the player already has this card: str(card)"))
+            raise(Exception(f"the player already has this card: str(card)"))
 
         self._cards.append(card)
+        
+        return True
     
 
 class Dealer(Player):

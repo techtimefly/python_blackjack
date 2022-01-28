@@ -8,7 +8,7 @@ class TestCard:
         pass
 
     def test_create_card(self):
-        rank="ace"
+        rank="queen"
         suit="clubs"
 
         card = Card(rank, suit)
