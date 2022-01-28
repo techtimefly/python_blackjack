@@ -1,4 +1,6 @@
+from typing import Iterable, final
 from attrs import setters
+import random
 
 class Token:
     def __init__(self, value) -> None:
@@ -65,8 +67,74 @@ class Card:
 class Pack:
     """
     represents a deck of cards
+
+    ...
+    Attributes:
+        cards: [Card]
+            an array of all the cards in the deck
+
+    ...
+    Methods
+        __init__(self, ranks:iter, suits:iter):
+            constructor
+            builds the deck of cards
+
+        addCard(card):
+            add a new card to the deck
+
+        clear():
+            empty the deck of cards
+
+        dealCard():Card
+            returns the top card from the deck
+
+        generate_cards(self, ranks:iter, suits:iter):
+            builds the deck of cards
+
+        shuffle():
+            shuffle all the cards in place in random order
+
     """
-    pass
+    def __init__(self, ranks:Iterable=None, suits:Iterable=None):
+        self._cards=[]
+
+        if(ranks != None and suits != None):
+            self.generate_cards(ranks, suits)
+
+    @property
+    def cards(self): return self._cards
+
+    def addCard(self, card):
+        if card in self._cards:
+            raise ValueError(f"the card already exists in the deck: {str(card)}")
+
+        self._cards.append(card)
+
+    def clear(self): 
+        self._cards.clear
+
+    def deal_card(self):
+        card=None
+        try:
+            result=self._cards.pop()
+        except IndexError:
+            pass
+        except Exception:
+            pass
+        finally:
+            return card
+
+    def generate_cards(self, ranks:Iterable, suits:Iterable):
+        self.clear()
+
+        all_cards=[[Card(r, s) for r in ranks for s in suits]]
+
+        for row in all_cards:
+            self._cards.extend(row)
+
+    def shuffle(self):
+        random.shuffle(self._cards)
+    
 
 class Player:
     """
