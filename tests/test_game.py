@@ -1,6 +1,10 @@
-from python_blackjack.game import *
+from python_blackjack.game import Game
+from python_blackjack.player import Player
+from python_blackjack.token import Token
 import pytest
 import random
+
+from python_blackjack.token import Token
 
 class TestGame:
     def setup_class(cls):
@@ -8,9 +12,13 @@ class TestGame:
         players=[]
         tokens=[]
 
-    def test_add_players_to_game(self):
+    def test_add_players_to_game_with_balance(self):
         #TODO: test adding players to the game
-        pass
+        players = self.newPlayers()
+
+        assert(players != None and len(players) > 0)
+        assert(players[0].balance() > 0)
+
 
     def test_deal_initial_two_cards(self):
         #TODO: test dealing the intial two cards to every players
@@ -63,3 +71,11 @@ class TestGame:
     def test_test_exchance_tokens(self):
         #TODO: test that the player can exchance tokens
         pass
+
+    def newPlayers(self):
+        players=["Steve", "Michael", "Carlos", "Will", "Beth"]
+
+        
+        tokens=[Token(i) for i in [25, 50, 100, 250, 500]*5]
+
+        return [Player(p, tokens.copy()) for p in players]
