@@ -16,7 +16,7 @@ class Card:
         """
         self._rank=str(rank)
         self._suit=suit
-        self._value=rank
+        self._value=None
 
         if(self._rank.isdigit()):
             self._value = int(self._rank)

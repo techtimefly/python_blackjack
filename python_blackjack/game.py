@@ -5,6 +5,10 @@ from attrs import setters
 import random
 
 class Game:
+
+    _suits=['♣','♦','❤','♠']
+    _ranks=['2','4','5','6','7','8','9','10','j','q','k','a']
+    
     # TODO: define the game
     """Will handle the logic of the game
 

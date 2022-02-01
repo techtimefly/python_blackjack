@@ -1,5 +1,7 @@
 from python_blackjack.card import Card
+from python_blackjack.game import Game
 from python_blackjack.pack import Pack
+
 import pytest
 import random
 
@@ -9,7 +11,7 @@ class TestPack:
         pass
 
     def test_generate_pack(self):
-        pack = Pack(list(range(2,15)), ["clubs", "hearts", "diamonds", "spades"])
+        pack = Pack(Game._ranks, Game._suits);
 
         assert(pack is not None and len(pack.cards) > 0)
 
@@ -20,7 +22,7 @@ class TestPack:
         assert(str(a[0]) != str(b[0]))
 
     def test_shuffle_pack(self):
-        pack = Pack(list(range(2,15)), ["clubs", "hearts", "diamonds", "spades"])
+        pack = Pack(Game._ranks, Game._suits);
 
         a=pack.cards.copy()
         pack.shuffle()
