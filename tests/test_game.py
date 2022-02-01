@@ -12,6 +12,9 @@ class TestGame:
         cls.game=Game(cls.create_tokens(cls))
         cls.players=[]
 
+    def test_pack_of_cards_not_empty(self):
+        assert(len(self.game._pack._cards) > 0);
+
     def test_add_players_to_game_with_balance(self):
         
         players = self.newPlayers()

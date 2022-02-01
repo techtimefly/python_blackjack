@@ -91,13 +91,11 @@ class Pack:
         """
         self.clear()
 
-        all_cards=[[Card(r, s) for r in ranks for s in suits]]
+        self._cards=[Card(r, s) for r in ranks for s in suits]
 
-        for row in all_cards:
-            self._cards.extend(row)
 
     def shuffle(self):
-        """Shuffles the cards in random order
+        """Shuffles the cards x number of times
         """
-        for i in range(random.randint(1,10)):
+        for i in range(random.randint(1,50)):
             random.shuffle(self._cards)
